@@ -35,6 +35,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
          curl --request POST \
-         --url "https://api.github.com/repos/octocat/Spoon-Knife/issues" \
+         --url "https://jsonplaceholder.typicode.com/posts" \
          --header "Accept: application/vnd.github+json" \
          --data '${{needs.job1.outputs.output1}}'
