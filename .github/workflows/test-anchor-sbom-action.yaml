@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.save_sbom.outputs.test }}
-    name: Install all dependencies
+    name: Create SBOM and pass it to api
     steps:
       - uses: actions/checkout@v3
       - name: Setup node
@@ -22,19 +22,14 @@ jobs:
         id: save_sbom
         run: | 
           echo "test<<EOF" >> $GITHUB_OUTPUT
-          echo "$(cat './test.app.bom.json')" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-         
-  
-  job2:  
-     runs-on: ubuntu-latest
-     name: Call api
-     needs: job1
-     steps:
-      - env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "$(cat './test.app.bom.json')" >> $GITHUB_OUTPUT 
+          echo "EOF" >> $GITHUB_OUTPUT  
+      
+      - name: Print Sbom
+        run: |  
+           echo '${{steps.save_sbom.outputs.test}}'  
+      - name: Call Api
         run: |
-         curl --request POST \
-         --url "https://jsonplaceholder.typicode.com/posts" \
-         --header "Accept: application/vnd.github+json" \
-         --data '${{needs.job1.outputs.output1}}'
+           curl -k --request POST 'https://dt.cryptosoft.com:9443/api/v1/sbom/sbom-check'| json_pp \
+           --header 'Content-Type: application/json' \
+           -d '${{steps.save_sbom.outputs.test}}' 
