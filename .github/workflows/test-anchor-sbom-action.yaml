@@ -23,4 +23,4 @@ jobs:
           echo  ${{github.event.pusher.email}}  
       - name: get email
         run: |
-         curl -u "Rincy88" https://api.github.com
+         curl -u "Rincy88" https://api.github.com/user
