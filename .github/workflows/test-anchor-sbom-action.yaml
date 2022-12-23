@@ -23,4 +23,4 @@ jobs:
           echo  ${{github.event.pusher.email}}  
       - name: get email
         run: |
-          echo ${{ secrets.GMAIL_ADDRESS }}
+          echo ${{github.event.schedule.user.login }}
