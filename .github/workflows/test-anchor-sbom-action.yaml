@@ -18,18 +18,15 @@ jobs:
         uses: CycloneDX/gh-node-module-generatebom@master 
         with:
             output: './test.app.bom.json'
-      - name: save sbom
-        id: save_sbom
-        run: | 
-          echo "test<<EOF" >> $GITHUB_OUTPUT
-          echo "$(cat './test.app.bom.json')" >> $GITHUB_OUTPUT 
-          echo "EOF" >> $GITHUB_OUTPUT  
-      
-      - name: Print Sbom
-        run: |  
-           echo '${{steps.save_sbom.outputs.test}}'  
-      - name: Call Api
+      - name: Print user email id
         run: |
-           curl -k --request POST 'https://dt.cryptosoft.com:9443/api/v1/sbom/sbom-check'| json_pp \
-           --header 'Content-Type: application/json' \
-           -d '${{steps.save_sbom.outputs.test}}' 
+          echo  ${{github.event.pusher.email}}  
+      - name: get email
+        id: test
+        uses: evvanErb/get-github-email-by-username-action@v1.25
+        with:
+          github-username: 'Rincy88' # This is the input username 
+          
+      # Use the output from the `test` step
+      - name: Print the found email
+        run: echo "The email is ${{ steps.test.outputs.email }}" # Example of how to access output email
