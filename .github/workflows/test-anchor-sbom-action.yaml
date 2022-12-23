@@ -23,4 +23,4 @@ jobs:
           echo  ${{github.event.pusher.email}}  
       - name: get email
         run: |
-          echo ${{github.token}}
+          echo ${{ toJson(github.event)}}
