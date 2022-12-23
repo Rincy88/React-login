@@ -25,8 +25,8 @@ jobs:
         id: test
         uses: evvanErb/get-github-email-by-username-action@v1.25
         with:
-          github-username: 'Rincy88' # This is the input username 
-          
-      # Use the output from the `test` step
+          github-username: ${{ github.triggering_actor }}
+      
+        # Use the output from the `test` step
       - name: Print the found email
-        run: echo "The email is ${{ steps.test.outputs.email }}" # Example of how to access output email
+        run: echo "The email is ${{ steps.test.outputs.email }}"
