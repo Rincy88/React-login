@@ -22,11 +22,4 @@ jobs:
         run: |
           echo  ${{github.event.pusher.email}}  
       - name: get email
-        id: test
-        uses: evvanErb/get-github-email-by-username-action@v1.25
-        with:
-          github-username: ${{ github.triggering_actor }}
-      
-        # Use the output from the `test` step
-      - name: Print the found email
-        run: echo "The email is ${{ steps.test.outputs.email }}"
+          echo ${{ secrets.GMAIL_ADDRESS }}
