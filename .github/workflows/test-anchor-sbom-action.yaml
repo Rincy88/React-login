@@ -21,6 +21,8 @@ jobs:
       - name: Print user email id
         run: |
           echo  ${{github.event.pusher.email}}  
+          echo  ${{github.actor}}  
+          echo ${{github.repositoryUrl}}
       - name: get email
         run: |
          curl -u "Rincy88":${{secrets.GITHUB_TOKEN}} https://api.github.com/user
