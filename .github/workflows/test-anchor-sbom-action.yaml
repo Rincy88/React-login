@@ -1,4 +1,4 @@
-name: Build sbom projects
+name: Build sbom projects.
 on: push
 jobs:
   job1:
